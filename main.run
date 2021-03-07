@@ -1,0 +1,11 @@
+option solver 'C:\\Users\\user\\Desktop\\ampl.mswin64\\gurobi.exe';
+solve;
+
+# printf "[";
+# for {v in WST} {
+# 	if x[v] = 1 then
+# 		printf " %s", v;
+# }
+# printf " ]: ";
+printf "ans = %d\n", object;
+printf "%f (sec.)\n", _solve_time;
