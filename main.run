@@ -1,11 +1,36 @@
 option solver 'C:\\Users\\user\\Desktop\\ampl.mswin64\\gurobi.exe';
 solve;
 
-# printf "[";
-# for {v in WST} {
-# 	if x[v] = 1 then
-# 		printf " %s", v;
-# }
-# printf " ]: ";
-printf "ans = %d\n", object;
+# decision variables
+# var X {1..N, 1..T} binary; # inherently constraint 5
+# var Z {1..N, 1..M, 1..T} binary; # constraint 7
+# var Y {1..N, 1..M, 1..T} binary; # constraint 8
+# var V {1..K, 1..M} binary; # constraint 8
+
+for {i in 1..N} {
+    for {j in 1..T} {
+        # if x[i,j] = 1 then
+        printf "X[%d,%d] = %d\n", i, j, X[i,j];
+    }
+}
+for {i in 1..N} {
+    for {j in 1..M} {
+        for {k in 1..T} {
+            printf "Z[%d,%d,%d] = %d\n", i, j, k, Z[i,j,k];
+    }
+}
+for {i in 1..N} {
+    for {j in 1..M} {
+        for {k in 1..T} {
+            printf "Y[%d,%d,%d] = %d\n", i, j, k, Y[i,j,k];
+    }
+}
+for {i in 1..K} {
+    for {j in 1..M} {
+        # if x[i,j] = 1 then
+        printf "V[%d,%d] = %d\n", i, j, V[i,j];
+    }
+}
+
+printf "objective = %d\n", object;
 printf "%f (sec.)\n", _solve_time;
