@@ -23,7 +23,7 @@ subject to constraint_1 {i in 1..N}:
 	sum {t in EFT[i]+1..LFT[i]} X[i,t] = d[i];
 subject to constraint_2 {i in 1..N, t in EST[i]+1 .. LFT[i]-1}:
 	d[i] * (X[i,t] - X[i,t+1]) - sum {q in max(EFT[i]+1,t-d[i]+1) .. t-1} X[i,q] <= 1;
-subject to constraint_3 {i in 1..N, t in EST[i]+1 .. min(LFT[i],EST[i]+d[i])}:
+subject to constraint_3 {i in 1..N, t in max(EST[i]+1,d[i]+1) .. min(LFT[i],EST[i]+d[i])}:
 	X[i,t] <= X[i,t-d[i]];
 subject to constraint_4 {i in 1..N, t in EST[i]+d[i]+1 .. LFT[i]}:
 	X[i,t] <= sum {q in EFT[i]+d[i] .. t-d[i]} X[i,q];
