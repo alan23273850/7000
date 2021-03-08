@@ -67,7 +67,7 @@ for v in reversed(topological_order):
     # print(v, LST[v], LFT[v])
 
 assert EFT[topological_order[-1]] == LFT[topological_order[-1]]
-T = EFT[topological_order[-1]] # write T
+T = EFT[topological_order[-1]] + 2 # write T
 
 ###############################################################
 
