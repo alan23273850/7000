@@ -11,6 +11,7 @@ EFT = defaultdict(int) # ok
 LST = defaultdict(int) # ok
 LFT = defaultdict(int) # ok
 d = [None] # ok
+V = [None] # ok
 R = [None] # ok
 
 g = topological_sort.Graph()
@@ -41,12 +42,15 @@ with open(sys.argv[1], 'r') as f:
                 else: assert K == len(lines[1:])
                 R.append(lines[1:]) # write R
         if flag == 3:
-            if lines[0].isdigit():
+            if len(lines)>0 and lines[0].isdigit():
                 lines = list(map(lambda x: int(x), lines))
-                M = max(lines) # write M
+                assert lines[0] == len(V)
+                assert K == len(lines[1:])
+                V.append(lines[1:]) # write V
 
 assert len(d) == len(R)
 N = len(d) - 1 # write N
+M = len(V) - 1 # write M
 assert len(g.parents) == N - 1
 
 topological_order = g.topologicalSort()
@@ -76,23 +80,28 @@ with open('data.run', 'w') as f:
     print(f'param K := {K};', file=f)
     print('param: EST :=', file=f)
     for i in range(1, 1+N):
-        print(i, EST[i], file=f)
+        print(i, EST[i] + int(i>1) + int(i==N), file=f)
     print(';', file=f)
     print('param: EFT :=', file=f)
     for i in range(1, 1+N):
-        print(i, EFT[i], file=f)
+        print(i, EFT[i] + int(i>1) + int(i==N), file=f)
     print(';', file=f)
     print('param: LST :=', file=f)
     for i in range(1, 1+N):
-        print(i, LST[i], file=f)
+        print(i, LST[i] + int(i>1) + int(i==N), file=f)
     print(';', file=f)
     print('param: LFT :=', file=f)
     for i in range(1, 1+N):
-        print(i, LFT[i], file=f)
+        print(i, LFT[i] + int(i>1) + int(i==N), file=f)
     print(';', file=f)
     print('param: d :=', file=f)
     for i in range(1, 1+N):
         print(i, d[i], file=f)
+    print(';', file=f)
+    print('param: V :=', file=f)
+    for i in range(1, 1+M):
+        for j in range(K):
+            print(j+1, i, V[i][j], file=f)
     print(';', file=f)
     print('param: R :=', file=f)
     for i in range(1, 1+N):

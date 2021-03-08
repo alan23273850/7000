@@ -10,23 +10,23 @@ param EFT {1..N}; # earliest finish time of a workstation
 param LST {1..N}; # latest start time of a workstation
 param LFT {1..N}; # latest finish time of a workstation
 param d {1..N}; # duration for each workstation
+param V {1..K, 1..M}; # coefficient in (constraint 8)
 param R {1..N, 1..K}; # coefficient in (constraint 8)
 
 # decision variables
 var X {1..N, 1..T} binary; # inherently constraint 5
 var Z {1..N, 1..M, 1..T} binary; # constraint 7
 var Y {1..N, 1..M, 1..T} binary; # constraint 8
-var V {1..K, 1..M} binary; # constraint 8
 
 # constraints
 subject to constraint_1 {i in 1..N}:
 	sum {t in EFT[i]+1..LFT[i]} X[i,t] = d[i];
 subject to constraint_2 {i in 1..N, t in EST[i]+1 .. LFT[i]-1}:
 	d[i] * (X[i,t] - X[i,t+1]) - sum {q in max(EFT[i]+1,t-d[i]+1) .. t-1} X[i,q] <= 1;
-subject to constraint_3 {i in 1..N, t in max(EST[i]+1,d[i]+1) .. min(LFT[i],EST[i]+d[i])}:
-	X[i,t] <= X[i,t-d[i]];
-subject to constraint_4 {i in 1..N, t in EST[i]+d[i]+1 .. LFT[i]}:
-	X[i,t] <= sum {q in EFT[i]+d[i] .. t-d[i]} X[i,q];
+subject to constraint_3 {i in 1..N, j in i+1 .. N, t in max(EST[i]+1,d[i]+1) .. min(LFT[i],EST[i]+d[i])}:
+	X[j,t] <= X[i,t-d[i]];
+subject to constraint_4 {i in 1..N, j in i+1 .. N, t in EST[i]+d[i]+1 .. LFT[i]}:
+	X[j,t] <= sum {q in EFT[i]+d[i] .. t-d[i]} X[i,q];
 subject to constraint_6 {t in 1..T}:
 	sum {i in 1..N, m in 1..M} Z[i,m,t] <= M;
 subject to constraint_7 {m in 1..M, t in 1..T}:
