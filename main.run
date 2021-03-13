@@ -2,19 +2,23 @@ option solver 'C:\\Users\\user\\Desktop\\ampl.mswin64\\gurobi.exe';
 solve;
 
 # decision variables
-# var X {1..N, 1..T} binary; # inherently constraint 5
-# var Z {1..N, 1..M, 1..T} binary; # constraint 7
-# var Y {1..N, 1..M, 1..T} binary; # constraint 8
+# var W {1..N, 1..M, 1..K} binary;
+# var X {1..N, 1..T} binary;
+# var Y {1..N, 1..T} binary;
+# var Z {1..N, 1..M, 1..T} binary;
+for {i in 1..N}
+    for {j in 1..M}
+        for {k in 1..K}
+            printf "W[%d,%d,%d] = %d\n", i, j, k, W[i,j,k];
 for {i in 1..N}
     for {j in 1..T}
         printf "X[%d,%d] = %d\n", i, j, X[i,j];
 for {i in 1..N}
-    for {j in 1..M}
-        for {k in 1..T}
-            printf "Z[%d,%d,%d] = %d\n", i, j, k, Z[i,j,k];
+    for {j in 1..T}
+        printf "Y[%d,%d] = %d\n", i, j, Y[i,j];
 for {i in 1..N}
     for {j in 1..M}
         for {k in 1..T}
-            printf "Y[%d,%d,%d] = %d\n", i, j, k, Y[i,j,k];
+            printf "Z[%d,%d,%d] = %d\n", i, j, k, Z[i,j,k];
 printf "objective = %d\n", object;
 printf "%f (sec.)\n", _solve_time;

@@ -67,7 +67,7 @@ for v in reversed(topological_order):
     # print(v, LST[v], LFT[v])
 
 assert EFT[topological_order[-1]] == LFT[topological_order[-1]]
-T = EFT[topological_order[-1]] + 2 # write T
+T = EFT[topological_order[-1]] # write T
 
 ###############################################################
 
@@ -80,24 +80,26 @@ with open('data.run', 'w') as f:
     print(f'param K := {K};', file=f)
     print('param: EST :=', file=f)
     for i in range(1, 1+N):
-        print(i, EST[i] + int(i>1) + int(i==N), file=f)
+        print(i, EST[i], file=f)
     print(';', file=f)
     print('param: EFT :=', file=f)
     for i in range(1, 1+N):
-        print(i, EFT[i] + int(i>1) + int(i==N), file=f)
+        print(i, EFT[i], file=f)
     print(';', file=f)
     print('param: LST :=', file=f)
     for i in range(1, 1+N):
-        print(i, LST[i] + int(i>1) + int(i==N), file=f)
+        print(i, LST[i], file=f)
     print(';', file=f)
     print('param: LFT :=', file=f)
     for i in range(1, 1+N):
-        print(i, LFT[i] + int(i>1) + int(i==N), file=f)
+        print(i, LFT[i], file=f)
     print(';', file=f)
     print('param: d :=', file=f)
     for i in range(1, 1+N):
         print(i, d[i], file=f)
     print(';', file=f)
+    for i in range(2, 1+N):
+        print(f'set P[{i}] :=', str(g.parents[i]).replace(',','')[1:-1] + ';', file=f)
     print('param: V :=', file=f)
     for i in range(1, 1+M):
         for j in range(K):
