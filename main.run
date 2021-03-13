@@ -21,4 +21,4 @@ for {i in 1..N}
         for {k in 1..T}
             printf "Z[%d,%d,%d] = %d\n", i, j, k, Z[i,j,k];
 printf "objective = %d\n", object;
-printf "%f (sec.)\n", _solve_time;
+printf "time = %f (sec.)\n", _solve_time;
