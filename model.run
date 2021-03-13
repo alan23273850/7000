@@ -16,9 +16,9 @@ param R {1..N, 1..K}; # coefficient in (constraint 8)
 
 # decision variables
 var W {1..N, 1..M, 1..K} binary;
-var X {1..N, 1..T} binary;
-var Y {1..N, 1..T} binary;
-var Z {1..N, 1..M, 1..T} binary;
+var X {1..N, 0..T} binary;
+var Y {1..N, 0..T} binary;
+var Z {1..N, 1..M, 0..T} binary;
 
 # constraints
 subject to constraint_1 {i in 1..N}:
